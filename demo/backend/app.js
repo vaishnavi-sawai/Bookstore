@@ -1,0 +1,42 @@
+require("dotenv").config();
+
+const mongoose = require("mongoose");
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
+//My routes
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
+const categoryRoutes = require("./routes/category");
+const productRoutes = require("./routes/product");
+const orderRoutes = require("./routes/order");
+const stripePaymentRoutes = require("./routes/stripePayment");
+// const paymentBRoutes = require("./routes/paymentBRoutes");
+
+
+
+
+//Middlewares
+app.use(bodyParser.json());
+app.use(cors());
+
+//My Routes
+app.get('/',( req , res)=> {res.send("Welcome to the Vijay Electronics's Backend Server")})
+app.use("/api", authRoutes);
+app.use("/api", userRoutes);
+app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
+app.use("/api", orderRoutes);
+app.use("/api", stripePaymentRoutes);
+// app.use("/api", paymentBRoutes);
+
+
+//PORT
+const port = process.env.PORT || 8000;
+
+//Starting a server
+app.listen(port, () => {
+  console.log(`app is running at ${port}`);
+});
